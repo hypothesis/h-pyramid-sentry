@@ -63,7 +63,7 @@ upgrade-package: python
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
-	rm -rf build .eggs dist *.egg-info
+	rm -rf build .eggs dist *.egg-info .coverage.* .coverage
 
 .PHONY: python
 python:

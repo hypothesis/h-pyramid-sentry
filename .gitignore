@@ -1,5 +1,6 @@
 *.pyc
-.coverage*
+.coverage
+.coverage.*
 .tox
 .idea
 
