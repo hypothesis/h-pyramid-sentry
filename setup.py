@@ -34,10 +34,12 @@ def read_egg_version():
 
 
 def get_version(major_version, build_var='BUILD'):
-    # If we have a
+    # If we have a build argument we should honour it no matter what
     build = os.environ.get(build_var)
     if build:
         return major_version + '.' + build
+
+    # If not, we should try and read it from the .egg-info/ data
 
     # We need to do this for source distributions, as setup.py is re-run when
     # installed this way, and we would always get 'dev0' as the version
@@ -47,6 +49,8 @@ def get_version(major_version, build_var='BUILD'):
     if egg_version:
         return egg_version
 
+    # Otherwise create a 'dev' build which will be counted by pip as 'later'
+    # than the major version no matter what
     return major_version + '.dev0'
 
 
@@ -67,8 +71,7 @@ setup(
     url="https://web.hypothes.is/",
     project_urls={
         # TODO! - Fix me when moved into a separate repo
-        'Source': 'https://github.com/hypothesis/h',
-        'Deployment': 'https://jenkins.hypothes.is/job/h/job/master/',
+        'Source': 'https://github.com/hypothesis/h'
     },
 
     # From: https://pypi.org/pypi?:action=list_classifiers

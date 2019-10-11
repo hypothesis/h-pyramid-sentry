@@ -57,7 +57,7 @@ pip-compile: python
 
 .PHONY: upgrade-package
 upgrade-package: python
-	@tox -qe py36-dev -- pip-compile --upgrade-package $(name)
+	@tox -qe py36-pip-compile --upgrade-package $(name)
 
 .PHONY: clean
 clean:
