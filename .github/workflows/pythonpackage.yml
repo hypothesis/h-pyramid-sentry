@@ -2,29 +2,26 @@ name: Python package
 on: [push]
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Test
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.6]
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v1
 
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.6
       uses: actions/setup-python@v1
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.6
 
     - name: Check formatting
       run: |
         pip install black
         black --check `python setup.py  --name`
 
-    # Dependencies are checked by pylint, so this is as late as we can leave this
+    # Dependencies are checked by pylint,
+    # so this is as late as we can leave this
     - name: Install dependencies
       run: |
         pip install .
@@ -43,6 +40,21 @@ jobs:
 #      run: |
 #        coverage report --show-missing
 
+  package:
+    name: Package
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v1
+
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.6
+
     - name: Package
       run: |
         pip install twine
@@ -57,23 +69,15 @@ jobs:
 
   publish:
     name: Publish
-    needs: build
+    needs: package
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
 
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.6]
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v1
-
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 3.6
       uses: actions/setup-python@v1
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: 3.6
 
     - name: Download built packages
       uses: actions/download-artifact@v1
