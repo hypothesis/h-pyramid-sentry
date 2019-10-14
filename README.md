@@ -26,6 +26,11 @@ Usage
 ```python
 # Hook into Pyramid
 config.add_settings({
+    # Any options supported by sentry_sdk.init
+    "h_pyramid_sentry.init": {
+        "environment": "<my_sentry_env>"
+        #...
+    },
     "h_pyramid_sentry.filters": [
         lambda event: instanceof(event.exception, ValueError)
     ],
@@ -42,6 +47,6 @@ The Sentry integration will listen to the following Pyramid deployment settings:
 
 | Pyramid setting        | Effect |
 |------------------------|---------------|
-| `h.sentry_environment` | Sets the Sentry option: [`environment`](https://docs.sentry.io/error-reporting/configuration/?platform=javascript#environment) |
+| `h_pyramid_sentry.init` | A dict of any [options understood by `sentry_sdk.init()`](https://docs.sentry.io/error-reporting/configuration/?platform=javascript#common-options) |
 | `h_pyramid_sentry.filters` | A list of functions to apply as filters |
 | `h_pyramid_sentry.retry_support` | Enable retry detection and filtering |
