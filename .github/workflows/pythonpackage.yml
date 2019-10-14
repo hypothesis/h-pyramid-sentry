@@ -45,11 +45,11 @@ jobs:
 #        coverage report --show-missing
 
     - name: Package
-      run:
+      run: |
         pip install twine
         BUILD=`date +%Y%m%d.%H%M%S` python setup.py bdist_wheel sdist
         twine check dist/*
 
     - name: Publish
-      run:
+      run: |
         twine upload dist/*
