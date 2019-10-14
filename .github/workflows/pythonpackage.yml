@@ -1,21 +1,17 @@
 name: Python package
-
+on: [push]
 
 jobs:
   publish:
     name: Publish
     needs: build
-    on:
-      push:
-        branches:
-          - master
-
+    if: github.ref == 'master'
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
       matrix:
         python-version: [3.6]
-        
+
     steps:
     - name: Package
       run: |
@@ -28,7 +24,6 @@ jobs:
         twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} dist/*
 
   build:
-    on: [push]
     name: Build
     runs-on: ubuntu-latest
     strategy:
