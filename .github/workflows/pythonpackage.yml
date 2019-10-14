@@ -40,14 +40,14 @@ jobs:
         pip install pytest coverage
         coverage run -m pytest
 
-    - name: Coverage
-      run: |
-        coverage report --show-missing
+#    - name: Coverage
+#      run: |
+#        coverage report --show-missing
 
     - name: Package
       run:
         pip install twine
-        python setup.py bdist_wheel sdist
+        BUILD=`date +%Y%m%d.%H%M%S` python setup.py bdist_wheel sdist
         twine check dist/*
 
     - name: Publish
