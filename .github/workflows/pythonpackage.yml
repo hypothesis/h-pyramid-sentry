@@ -12,23 +12,39 @@ jobs:
         python-version: [3.6]
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout code
+      uses: actions/checkout@v1
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+
+    - name: Check formatting
       run: |
-        python -m pip install --upgrade pip
-        pip install .
-    - name: Lint with flake8
+        pip install black
+        black --check `python setup.py  --name`
+
+    - name: Lint with pylint
       run: |
-        pip install flake8
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        pip install pylint
+        pylint --reports=y `python setup.py  --name` tests
+
     - name: Test with pytest
       run: |
-        pip install pytest
-        pytest
+        pip install pytest coverage
+        coverage run -m pytest
+
+    - name: Coverage
+      run: |
+        coverage report --show-missing
+
+    - name: Package
+      run:
+        pip install twine
+        python setup.py bdist_wheel sdist
+        twine check dist/*
+
+    - name: Publish
+      run:
+        twine upload dist/*
