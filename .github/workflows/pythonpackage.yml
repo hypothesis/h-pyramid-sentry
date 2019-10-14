@@ -28,7 +28,7 @@ jobs:
     # Dependencies are checked by pylint, so this is as late as we can leave this
     - name: Install dependencies
       run: |
-        - pip install .
+        pip install .
 
     - name: Lint with pylint
       run: |
