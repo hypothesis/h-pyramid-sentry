@@ -10,6 +10,7 @@ class Matcher:
     stands in for another and will evaluate to true when compared with the
     other.
     """
+
     def __init__(self, description):
         self.description = description
 
@@ -25,6 +26,7 @@ class LambdaMatcher(Matcher):
     Implements the matcher pattern when given a test function which tests if we
     are equal to another object.
     """
+
     def __init__(self, description, test_function):
         super().__init__(description)
         self.test_function = test_function
@@ -35,6 +37,7 @@ class LambdaMatcher(Matcher):
 
 class Anything(LambdaMatcher):
     """A class that matches anything"""
+
     def __init__(self):
         super().__init__("* anything *", lambda _: True)
 

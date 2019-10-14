@@ -42,16 +42,13 @@ class TestEventFilter:
         event_filter = get_before_send([self.never_filter, self.never_filter])
 
         assert (
-            event_filter(sentinel.event_dict, sentinel.hint_dict)
-            == sentinel.event_dict
+            event_filter(sentinel.event_dict, sentinel.hint_dict) == sentinel.event_dict
         )
 
     def test_it_logs_when_an_error_is_filtered(self, caplog):
         caplog.set_level(logging.INFO)
 
-        get_before_send([self.always_filter])(
-            sentinel.event_dict, sentinel.hint_dict
-        )
+        get_before_send([self.always_filter])(sentinel.event_dict, sentinel.hint_dict)
 
         assert caplog.record_tuples == [
             (
