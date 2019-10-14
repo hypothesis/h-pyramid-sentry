@@ -52,4 +52,4 @@ jobs:
 
     - name: Publish
       run: |
-        twine upload dist/*
+        twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} dist/*
