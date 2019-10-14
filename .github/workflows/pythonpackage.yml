@@ -51,5 +51,6 @@ jobs:
         twine check dist/*
 
     - name: Publish
+      if: ${{ github.ref }} == 'master'
       run: |
         twine upload -u __token__ -p ${{ secrets.PYPI_TOKEN }} dist/*
