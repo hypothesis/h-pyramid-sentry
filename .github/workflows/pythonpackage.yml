@@ -25,6 +25,11 @@ jobs:
         pip install black
         black --check `python setup.py  --name`
 
+    # Dependencies are checked by pylint, so this is as late as we can leave this
+    - name: Install dependencies
+      run: |
+        - pip install .
+
     - name: Lint with pylint
       run: |
         pip install pylint
