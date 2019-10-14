@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Debug
-      - run: |
+      run: |
           echo ${{ github.ref }}
     - name: Package
       run: |
