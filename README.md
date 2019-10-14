@@ -50,3 +50,7 @@ The Sentry integration will listen to the following Pyramid deployment settings:
 | `h_pyramid_sentry.init` | A dict of any [options understood by `sentry_sdk.init()`](https://docs.sentry.io/error-reporting/configuration/?platform=javascript#common-options) |
 | `h_pyramid_sentry.filters` | A list of functions to apply as filters |
 | `h_pyramid_sentry.retry_support` | Enable retry detection and filtering |
+
+As per the [Sentry docs](https://docs.sentry.io/error-reporting/configuration/?platform=python#dsn), the
+environment variable `SENTRY_DSN` will be automatically read if set, although this can
+also be passed along with any other Sentry SDK options via `h_pyramid_sentry.init`.
