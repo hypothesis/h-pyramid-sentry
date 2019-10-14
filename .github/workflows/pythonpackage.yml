@@ -74,15 +74,15 @@ jobs:
     if: github.ref == 'refs/heads/master'
 
     steps:
-    - name: Set up Python 3.6
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.6
-
     - name: Download built packages
       uses: actions/download-artifact@v1
       with:
         name: dist
+
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.6
 
 #    - name: Upload to PyPI
 #      run: |
