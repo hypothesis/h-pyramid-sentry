@@ -1,5 +1,6 @@
 """Error tracking service API and setup."""
 
+import re
 import sentry_sdk
 
 from sentry_sdk.integrations.celery import CeleryIntegration
@@ -22,10 +23,11 @@ def report_exception(exc=None):
     sentry_sdk.capture_exception(exc)
 
 
-DEFAULTS_OPTIONS = {
+DEFAULT_OPTIONS = {
     "send_default_pii": True,
     "integrations": [CeleryIntegration(), PyramidIntegration()],
 }
+OPTION_PATTERN = re.compile(r"^h_pyramid_sentry\.init\.(.*)$")
 
 
 def includeme(config):
@@ -42,9 +44,10 @@ def includeme(config):
         filters.append(is_retryable_error)
         config.scan("h_pyramid_sentry.subscribers")
 
-    init_options = {
-        **DEFAULTS_OPTIONS,
-        **config.registry.settings.get("h_pyramid_sentry.init", {}),
-    }
+    init_options = {**DEFAULT_OPTIONS}
+    for key, value in config.registry.settings.items():
+        match = OPTION_PATTERN.match(key)
+        if match:
+            init_options[match.group(1)] = value
 
     sentry_sdk.init(before_send=get_before_send(filters), **init_options)

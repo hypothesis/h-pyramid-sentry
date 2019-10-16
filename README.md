@@ -27,10 +27,7 @@ Usage
 # Hook into Pyramid
 config.add_settings({
     # Any options supported by sentry_sdk.init
-    "h_pyramid_sentry.init": {
-        "environment": "<my_sentry_env>"
-        #...
-    },
+    "h_pyramid_sentry.init.environment": "<my_sentry_env>",
     "h_pyramid_sentry.filters": [
         lambda event: instanceof(event.exception, ValueError)
     ],

@@ -38,7 +38,7 @@ class TestIncludeMe:
         )
 
     def test_it_initializes_sentry_sdk_from_config(self, pyramid_config, sentry_sdk):
-        pyramid_config.add_settings({"h_pyramid_sentry.init": {"environment": "test"}})
+        pyramid_config.add_settings({"h_pyramid_sentry.init.environment": "test"})
 
         includeme(pyramid_config)
 
