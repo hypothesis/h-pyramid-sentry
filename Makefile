@@ -9,12 +9,6 @@ help:
 	@echo "make publish           Publish packages created in the dist/ directory"
 	@echo "make test              Run the unit tests"
 	@echo "make coverage          Print the unit test coverage report"
-	@echo "make codecov           Upload the coverage report to codecov.io"
-	@echo "make pip-compile       Compile requirements.in to requirements.txt."
-	@echo "                       Use this command after editing requirements.in, for"
-	@echo "                       example after adding or removing a requirement."
-	@echo "make upgrade-package   Upgrade the version of a package in requirements.txt."
-	@echo '                       Usage: `make upgrade-package name=some-package`.'
 	@echo "make clean             Delete development artefacts (cached files, "
 	@echo "                       dependencies, etc)"
 
@@ -46,18 +40,6 @@ test: python
 .PHONY: coverage
 coverage: python
 	tox -q -e py36-coverage
-
-.PHONY: codecov
-codecov: python
-	tox -q -e py36-codecov
-
-.PHONY: pip-compile
-pip-compile: python
-	tox -q -e py36-pip-compile
-
-.PHONY: upgrade-package
-upgrade-package: python
-	@tox -qe py36-pip-compile --upgrade-package $(name)
 
 .PHONY: clean
 clean:
