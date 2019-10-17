@@ -116,4 +116,5 @@ jobs:
       # Try this for now to see if we can get the version number
       run: |
         export VERSION=`ls dist/*.gz | sed -e 's/dist\/.*-\(.*\)\.tar.gz/\1/g'`
-        echo $VERSION
+        git tag v$VERSION
+        git push --tags
