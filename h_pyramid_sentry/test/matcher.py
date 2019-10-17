@@ -15,10 +15,10 @@ class Matcher:
         self.description = description
 
     def __str__(self):
-        return self.description
+        return self.description  # pragma: no cover
 
     def __repr__(self):
-        return f"<{self.__class__.__name__} '{str(self)}'>"
+        return f"<{self.__class__.__name__} '{str(self)}'>"  # pragma: no cover
 
 
 class LambdaMatcher(Matcher):

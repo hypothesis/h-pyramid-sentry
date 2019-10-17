@@ -50,7 +50,7 @@ class TestIncludeMe:
         )
 
     def test_it_reads_filter_configuration(self, pyramid_config, get_before_send):
-        filter_functions = [lambda *args: 1]
+        filter_functions = [lambda *args: 1]  # pragma: no cover
         pyramid_config.registry.settings["h_pyramid_sentry.filters"] = filter_functions
 
         includeme(pyramid_config)
