@@ -33,8 +33,14 @@ jobs:
 
     - name: Test with pytest
       run: |
-        pip install pytest coverage
-        coverage run -m pytest
+        pip install pytest pytest-html coverage
+        coverage run -m pytest --html=test_report.html
+
+    - name: Archive pytest report
+      uses: actions/upload-artifact@v1
+      with:
+        name: test_report.html
+        path: test_report.html
 
 #    - name: Coverage
 #      run: |
