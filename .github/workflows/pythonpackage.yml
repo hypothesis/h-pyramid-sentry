@@ -31,28 +31,37 @@ jobs:
         pip install pylint
         pylint --reports=y `python setup.py  --name` tests
 
-    - name: Test with pytest
+    - name: Run unit tests
+      continue-on-error: true
       run: |
         pip install pytest pytest-html coverage
         coverage run -m pytest --html=test_report.html --self-contained-html
+        echo "exit $?" > test_result.sh
 
-    - name: Coverage
-      run: |
-        coverage combine
-        coverage report
-        coverage html --directory coverage_report
-
-    - name: Archive pytest report
+    - name: Archive unit test report
       uses: actions/upload-artifact@v1
       with:
         name: test_report.html
         path: test_report.html
 
-    - name: Archive pytest report
+    - name: Check unit test report
+      run: sh test_result.sh
+
+    - name: Run coverage
+      run: |
+        coverage combine
+        coverage html --directory coverage_report --fail-under=0
+        coverage report
+        echo "exit $?" > coverage_result.sh
+
+    - name: Archive coverage report
       uses: actions/upload-artifact@v1
       with:
         name: coverage_report
         path: coverage_report
+
+    - name: Check coverage report
+      run: sh coverage_result.sh
 
   package:
     name: Package
