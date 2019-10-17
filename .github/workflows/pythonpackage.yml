@@ -37,6 +37,7 @@ jobs:
         pip install pytest pytest-html coverage
         coverage run -m pytest --html=test_report.html --self-contained-html
         echo "exit $?" > test_result.sh
+        cat test_result.sh
 
     - name: Archive unit test report
       uses: actions/upload-artifact@v1
@@ -48,11 +49,13 @@ jobs:
       run: sh test_result.sh
 
     - name: Run coverage
+      continue-on-error: true
       run: |
         coverage combine
         coverage html --directory coverage_report --fail-under=0
         coverage report
         echo "exit $?" > coverage_result.sh
+        cat coverage_result.sh
 
     - name: Archive coverage report
       uses: actions/upload-artifact@v1
