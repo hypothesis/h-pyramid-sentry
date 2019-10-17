@@ -31,20 +31,43 @@ jobs:
         pip install pylint
         pylint --reports=y `python setup.py  --name` tests
 
-    - name: Test with pytest
+    - name: Run unit tests
+      continue-on-error: true
       run: |
-        pip install pytest coverage
-        coverage run -m pytest
+        pip install pytest pytest-html coverage
+        coverage run -m pytest --html=unit_test_report.html --self-contained-html
+        touch unit_tests_passed
 
-#    - name: Coverage
-#      run: |
-#        coverage report --show-missing
+    - name: Archive unit test report
+      uses: actions/upload-artifact@v1
+      with:
+        name: unit_test_report
+        path: unit_test_report.html
+
+    - name: Check unit test report
+      run: cat unit_tests_passed
+
+    - name: Run coverage
+      continue-on-error: true
+      run: |
+        coverage combine
+        coverage html --directory coverage_report --fail-under=0
+        coverage report
+        touch coverage_passed
+
+    - name: Archive coverage report
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage_report
+        path: coverage_report
+
+    - name: Check coverage report
+      run: cat coverage_passed
 
   package:
     name: Package
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
 
     steps:
     - name: Checkout code
@@ -74,15 +97,15 @@ jobs:
     if: github.ref == 'refs/heads/master'
 
     steps:
-    - name: Set up Python 3.6
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.6
-
     - name: Download built packages
       uses: actions/download-artifact@v1
       with:
         name: dist
+
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.6
 
 #    - name: Upload to PyPI
 #      run: |

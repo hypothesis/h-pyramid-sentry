@@ -60,7 +60,7 @@ setup(
 
     name=PACKAGE,
     version=get_version(major_version='1.0'),
-    description="A Pyramid plugin for integrating Sentry logging",
+    description="A Pyramid plugin for integrating Sentry monitoring and error tracking",
     long_description=from_file('README.md'),
     long_description_content_type='text/markdown',
 
@@ -80,7 +80,7 @@ setup(
         'Development Status :: 2 - Pre-Alpha',
         'Programming Language :: Python :: 3.6',
         'Framework :: Pyramid',
-        'Topic :: System :: Logging',
+        'Topic :: System :: Monitoring',
     ],
 
     license='License :: OSI Approved :: BSD License',
