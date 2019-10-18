@@ -25,6 +25,13 @@ class TestReportException:
 
 
 class TestIncludeMe:
+    def test_it_tells_sentry_sdk_to_ignore_exc_logger(
+        self, pyramid_config, ignore_logger
+    ):
+        includeme(pyramid_config)
+
+        ignore_logger.assert_called_once_with("exc_logger")
+
     def test_it_initializes_sentry_sdk(self, pyramid_config, sentry_sdk):
         includeme(pyramid_config)
 
@@ -75,6 +82,11 @@ class TestIncludeMe:
     @pytest.fixture
     def get_before_send(self, patch):
         return patch("h_pyramid_sentry.get_before_send")
+
+
+@pytest.fixture(autouse=True)
+def ignore_logger(patch):
+    return patch("h_pyramid_sentry.ignore_logger")
 
 
 @pytest.fixture(autouse=True)
