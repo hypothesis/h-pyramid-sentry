@@ -15,37 +15,37 @@ help:
 
 .PHONY: lint
 lint: python
-	tox -qq -e py36-lint
+	@tox -qe py36-lint
 
 .PHONY: format
 format: python
-	tox -q -e py36-format
+	@tox -qe py36-format
 
 .PHONY: checkformatting
 checkformatting: python
-	tox -q -e py36-checkformatting
+	@tox -qe py36-checkformatting
 
 .PHONY: dist
 dist: python
-	BUILD=$(BUILD) tox -q -e py36-package
+	@BUILD=$(BUILD) tox -qe py36-package
 
 .PHONY: publish
 publish: python
-	tox -q -e py36-publish
+	@tox -qe py36-publish
 
 .PHONY: test
 test: python
-	tox
+	@tox -q
 
 .PHONY: coverage
 coverage: python
-	tox -q -e py36-coverage
+	@tox -qe py36-coverage
 
 .PHONY: clean
 clean:
-	find . -type f -name "*.py[co]" -delete
-	find . -type d -name "__pycache__" -delete
-	rm -rf build .eggs dist *.egg-info .coverage.* .coverage
+	@find . -type f -name "*.py[co]" -delete
+	@find . -type d -name "__pycache__" -delete
+	@rm -rf build .eggs dist *.egg-info .coverage.* .coverage
 
 .PHONY: python
 python:
