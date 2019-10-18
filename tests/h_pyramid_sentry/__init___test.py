@@ -82,9 +82,10 @@ class TestIncludeMe:
         with testConfig() as config:
             yield config
 
-    @pytest.fixture
-    def get_before_send(self, patch):
-        return patch("h_pyramid_sentry.get_before_send")
+
+@pytest.fixture(autouse=True)
+def get_before_send(patch):
+    return patch("h_pyramid_sentry.get_before_send")
 
 
 @pytest.fixture(autouse=True)
