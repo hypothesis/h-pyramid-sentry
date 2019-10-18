@@ -39,6 +39,7 @@ def includeme(config):
     ]
 
     if asbool(config.registry.settings.get("h_pyramid_sentry.retry_support")):
+        # pylint:disable=import-outside-toplevel
         from h_pyramid_sentry.filters.pyramid import is_retryable_error
 
         filters.append(is_retryable_error)
