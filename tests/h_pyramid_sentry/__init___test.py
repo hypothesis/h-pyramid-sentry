@@ -62,7 +62,7 @@ class TestIncludeMe:
 
         includeme(pyramid_config)
 
-        get_before_send.assert_called_with(filter_functions)
+        get_before_send.assert_called_once_with(filter_functions)
 
     def test_it_reads_and_enables_retry_detection(
         self, pyramid_config, get_before_send
@@ -74,7 +74,7 @@ class TestIncludeMe:
 
         includeme(pyramid_config)
 
-        get_before_send.assert_called_with([is_retryable_error])
+        get_before_send.assert_called_once_with([is_retryable_error])
         pyramid_config.scan.assert_called_with("h_pyramid_sentry.subscribers")
 
     @pytest.fixture
