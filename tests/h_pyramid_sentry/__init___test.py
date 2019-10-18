@@ -1,6 +1,6 @@
+from unittest import mock
 import pytest
 
-from unittest.mock import MagicMock
 from pyramid.testing import testConfig
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.pyramid import PyramidIntegration
@@ -68,7 +68,10 @@ class TestIncludeMe:
         self, pyramid_config, get_before_send
     ):
         pyramid_config.registry.settings["h_pyramid_sentry.retry_support"] = True
-        pyramid_config.scan = MagicMock()
+        pyramid_config.scan = mock.create_autospec(
+            lambda module: None
+        )  # pragma: nocover
+
         includeme(pyramid_config)
 
         get_before_send.assert_called_with([is_retryable_error])
