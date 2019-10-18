@@ -70,8 +70,7 @@ setup(
     maintainer_email="eng@list.hypothes.is",
     url="https://web.hypothes.is/",
     project_urls={
-        # TODO! - Fix me when moved into a separate repo
-        'Source': 'https://github.com/hypothesis/h'
+        'Source': 'https://github.com/hypothesis/h-pyramid-sentry'
     },
 
     # From: https://pypi.org/pypi?:action=list_classifiers
