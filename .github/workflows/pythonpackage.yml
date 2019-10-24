@@ -25,7 +25,7 @@ jobs:
     # so this is as late as we can leave this
     - name: Install dependencies
       run: |
-        pip install .[tests]
+        pip install .[tests] cookiecutter
 
     - name: Lint with pylint
       run: |
