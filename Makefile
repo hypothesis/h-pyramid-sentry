@@ -11,7 +11,8 @@ help:
 	@echo "make coverage          Print the unit test coverage report"
 	@echo "make clean             Delete development artefacts (cached files, "
 	@echo "                       dependencies, etc)"
-
+	@echo "make template          Replay the cookiecutter project template over this"
+	@echo "                       project. Warning! This can destroy changes."
 
 .PHONY: lint
 lint: python
@@ -41,12 +42,16 @@ test: python
 coverage: python
 	@tox -qe py36-coverage
 
+.PHONY: template
+template: python
+	@tox -qe py36-replay-cookiecutter
+
 .PHONY: clean
 clean:
 	@find . -type f -name "*.py[co]" -delete
 	@find . -type d -name "__pycache__" -delete
-	@rm -rf build .eggs dist *.egg-info .coverage.* .coverage
+	@rm -rf build .eggs dist *.egg-info src/*.egg-info .coverage.* .coverage .pytest_cache
 
 .PHONY: python
 python:
-	@./bin/install-python
+	@./bin/install-python.sh

@@ -1,0 +1,15 @@
+{
+    "project_name": "Hypothesis Pyramid Sentry",
+    "description": "A Pyramid plugin for integrating Sentry error reporting",
+    "project_slug": "h-pyramid-sentry",
+    "pkg_name": "h_pyramid_sentry",
+    "options": {
+        "disable_replay": [
+            "README.md",
+            "setup.cfg",
+            "pytest.ini",
+            "src/h_pyramid_sentry/__init__.py"
+        ]
+    },
+    "_template": "git@github.com:hypothesis/h-cookiecutter-pypackage.git"
+}

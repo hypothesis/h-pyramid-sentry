@@ -3,7 +3,12 @@ branch = True
 parallel = True
 source =
     h_pyramid_sentry
-    tests
+    tests/unit
+
+[paths]
+source =
+    src/
+    */site-packages/
 
 [report]
 show_missing = True
