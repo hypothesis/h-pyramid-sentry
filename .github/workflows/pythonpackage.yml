@@ -82,7 +82,7 @@ jobs:
 
     - name: Package
       run: |
-        pip install twine
+        pip install twine wheel
         BUILD=`date +%Y%m%d.%H%M%S` python setup.py bdist_wheel sdist
         twine check dist/*
 
