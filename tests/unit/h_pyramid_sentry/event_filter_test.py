@@ -1,10 +1,9 @@
-import pytest
 import logging
-
 from unittest.mock import sentinel
 
+import pytest
 
-from h_pyramid_sentry.event_filter import get_before_send, LOG_MESSAGE_PREFIX
+from h_pyramid_sentry.event_filter import LOG_MESSAGE_PREFIX, get_before_send
 from h_pyramid_sentry.exceptions import FilterNotCallableError
 from h_pyramid_sentry.test import matcher
 

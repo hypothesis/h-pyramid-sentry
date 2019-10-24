@@ -3,7 +3,6 @@
 # Import is_error_retryable indirectly to make importing from us less
 # confusing as we have a very similarly named function
 import pyramid_retry
-
 from pyramid.threadlocal import get_current_request
 
 

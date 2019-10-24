@@ -1,14 +1,13 @@
 """Error tracking service API and setup."""
 
 import re
+
 import sentry_sdk
-
-from sentry_sdk.integrations.celery import CeleryIntegration
-from sentry_sdk.integrations.pyramid import PyramidIntegration
-from sentry_sdk.integrations.logging import ignore_logger
-from pyramid.settings import asbool
-
 from h_pyramid_sentry.event_filter import get_before_send
+from pyramid.settings import asbool
+from sentry_sdk.integrations.celery import CeleryIntegration
+from sentry_sdk.integrations.logging import ignore_logger
+from sentry_sdk.integrations.pyramid import PyramidIntegration
 
 
 def report_exception(exc=None):
