@@ -1,13 +1,13 @@
 from unittest import mock
 
 import pytest
+from pyramid.testing import testConfig
+from sentry_sdk.integrations.celery import CeleryIntegration
+from sentry_sdk.integrations.pyramid import PyramidIntegration
 
 from h_pyramid_sentry import includeme, report_exception
 from h_pyramid_sentry.filters.pyramid import is_retryable_error
 from h_pyramid_sentry.test.matcher import AnyFunction, AnyInstanceOfClass, Anything
-from pyramid.testing import testConfig
-from sentry_sdk.integrations.celery import CeleryIntegration
-from sentry_sdk.integrations.pyramid import PyramidIntegration
 
 
 class TestReportException:

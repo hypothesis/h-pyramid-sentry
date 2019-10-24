@@ -1,11 +1,11 @@
 from unittest import mock
 
 import pytest
+from pyramid import testing
+from pyramid_retry import BeforeRetry
 
 from h_pyramid_sentry.subscribers import add_retryable_error_to_sentry_context
 from h_pyramid_sentry.test.matcher import AnyStringMatching
-from pyramid import testing
-from pyramid_retry import BeforeRetry
 
 
 class TestAddRetryableErrorToSentryContext:
