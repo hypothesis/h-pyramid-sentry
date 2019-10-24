@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import sentinel
+
+import pytest
 
 from h_pyramid_sentry.filters.pyramid import is_retryable_error
 

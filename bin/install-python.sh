@@ -13,7 +13,7 @@
 # Usage
 # =====
 #
-# $ ./bin/install-python
+# $ ./bin/install-python.sh
 
 # Exit if we're running on Travis CI.
 # On Travis we just want to use the versions of Python provided in the Travis
@@ -21,6 +21,13 @@
 # .python-version.
 if [ "$TRAVIS" = "true" ]
 then
+  exit
+fi
+
+# Exit if we're running on Jenkins.
+# On Jenkins we run the tests in Docker and we just want to use the versions of
+# Python provided in the Docker container.
+if [ -n "${JENKINS_URL+set}" ]; then
   exit
 fi
 

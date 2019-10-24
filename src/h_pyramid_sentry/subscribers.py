@@ -1,9 +1,9 @@
 """A pyramid subscriber to add extra info to retryable events"""
 import traceback
 
+import sentry_sdk
 from pyramid.events import subscriber
 from pyramid_retry import IBeforeRetry
-import sentry_sdk
 
 
 @subscriber(IBeforeRetry)

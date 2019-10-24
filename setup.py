@@ -1,109 +1,77 @@
 import os
 
-from setuptools import setup, find_packages
-
-PACKAGE = "h_pyramid_sentry"
-
-INSTALL_REQUIRES = [
-    'sentry-sdk',
-    'pyramid',
-    'pyramid_retry',
-    'celery',
-]
-
-TESTS_REQUIRE = INSTALL_REQUIRES + [
-    'pytest',
-    'coverage',
-]
+from setuptools import find_packages, setup
+from setuptools.config import read_configuration
 
 
-def from_file(filename):
-    with open(filename) as fh:
-        return fh.read()
+class Package:
+    def __init__(self, config):
+        metadata = config['metadata']
+        options = config['options']
+
+        self.options = options
+        self.name = metadata['name']
+        self.version = metadata['version']
+
+    def tests_require(self):
+        return self.options['tests_require'] + self.options['install_requires']
+
+    def read_egg_version(self):
+        pkg_info_file = None
+        # PKG-INFO can be in different places depending on whether we are a
+        # source distribution or a checked out copy etc.
+        for location in [
+                'PKG-INFO',
+                'src/' + self.name + ".egg-info/PKG-INFO",
+                self.name + ".egg-info/PKG-INFO",
+            ]:
+            if os.path.isfile(location):
+                pkg_info_file = location
+
+        if not pkg_info_file:
+            return None
+
+        with open(pkg_info_file) as fh:
+            for line in fh:
+                if line.startswith("Version"):
+                    return line.strip().split("Version: ")[-1]
+
+    def get_version(self, build_var="BUILD"):
+        # If we have a build argument we should honour it no matter what
+        build = os.environ.get(build_var)
+        if build:
+            return self.version + "." + build
+
+        # If not, we should try and read it from the .egg-info/ data
+
+        # We need to do this for source distributions, as setup.py is re-run when
+        # installed this way, and we would always get 'dev0' as the version
+        # Wheels and binary installs don't work this way and read from PKG-INFO
+        # for them selves
+        egg_version = self.read_egg_version()
+        if egg_version:
+            return egg_version
+
+        # Otherwise create a 'dev' build which will be counted by pip as 'later'
+        # than the major version no matter what
+        return self.version + ".dev0"
 
 
-def read_egg_version():
-    pkg_info_file = PACKAGE + '.egg-info/PKG-INFO'
-    if not os.path.isfile(pkg_info_file):
-        return None
-
-    with open(pkg_info_file) as fh:
-        for line in fh:
-            if line.startswith('Version'):
-                return line.strip().split('Version: ')[-1]
-
-
-def get_version(major_version, build_var='BUILD'):
-    # If we have a build argument we should honour it no matter what
-    build = os.environ.get(build_var)
-    if build:
-        return major_version + '.' + build
-
-    # If not, we should try and read it from the .egg-info/ data
-
-    # We need to do this for source distributions, as setup.py is re-run when
-    # installed this way, and we would always get 'dev0' as the version
-    # Wheels and binary installs don't work this way and read from PKG-INFO
-    # for them selves
-    egg_version = read_egg_version()
-    if egg_version:
-        return egg_version
-
-    # Otherwise create a 'dev' build which will be counted by pip as 'later'
-    # than the major version no matter what
-    return major_version + '.dev0'
-
+package = Package(read_configuration('setup.cfg'))
 
 setup(
     # Metadata
     # https://docs.python.org/3/distutils/setupscript.html#additional-meta-data
-
-    name=PACKAGE,
-    version=get_version(major_version='1.0'),
-    description="A Pyramid plugin for integrating Sentry monitoring and error tracking",
-    long_description=from_file('README.md'),
-    long_description_content_type='text/markdown',
-
-    author="Hypothesis Engineering Team",
-    author_email="eng@list.hypothes.is",
-    maintainer="Hypothesis Engineering Team",
-    maintainer_email="eng@list.hypothes.is",
-    url="https://web.hypothes.is/",
-    project_urls={
-        'Source': 'https://github.com/hypothesis/h-pyramid-sentry'
-    },
-
-    # From: https://pypi.org/pypi?:action=list_classifiers
-    classifiers=[
-        # Maybe if we want to put people off less we can change this
-        'Development Status :: 2 - Pre-Alpha',
-        'Programming Language :: Python :: 3.6',
-        'Framework :: Pyramid',
-        'Topic :: System :: Monitoring',
-    ],
-
-    license='License :: OSI Approved :: BSD License',
-    platforms=['Operating System :: OS Independent'],
+    version=package.get_version(),
 
     # Contents and dependencies
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
+    # Read the MANIFEST.in
+    include_package_data=True,
 
-    packages=find_packages(),
-    install_requires=INSTALL_REQUIRES,
+    # Add support for pip install .[tests]
+    extras_require={"tests": package.tests_require()},
 
-    # Add support for pip install .[test]
-    extras_require={
-        'tests': TESTS_REQUIRE
-    },
-
-    # Adding pytest support for `python setup.py test` (also see setup.cfg)
-    test_suite="tests",
-    setup_requires=[
-        'pytest-runner',
-
-        # Try and prevent long-description bug when uploading to PyPI
-        'setuptools>=38.6.0',
-        'wheel>=0.31.0',
-        'twine>=1.11.0',
-    ],
-    tests_require=TESTS_REQUIRE,
+    tests_require=package.tests_require(),
 )

@@ -1,6 +1,6 @@
-import pytest
-
 from unittest import mock
+
+import pytest
 from pyramid import testing
 from pyramid_retry import BeforeRetry
 
