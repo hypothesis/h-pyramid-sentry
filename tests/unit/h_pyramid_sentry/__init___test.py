@@ -1,13 +1,13 @@
 from unittest import mock
 
 import pytest
+from h_matchers import Any
 from pyramid.testing import testConfig
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.pyramid import PyramidIntegration
 
 from h_pyramid_sentry import includeme, report_exception
 from h_pyramid_sentry.filters.pyramid import is_retryable_error
-from h_pyramid_sentry.test.matcher import AnyFunction, AnyInstanceOfClass, Anything
 
 
 class TestReportException:
@@ -37,11 +37,11 @@ class TestIncludeMe:
 
         sentry_sdk.init.assert_called_once_with(
             integrations=[
-                AnyInstanceOfClass(CeleryIntegration),
-                AnyInstanceOfClass(PyramidIntegration),
+                Any.instance_of(CeleryIntegration),
+                Any.instance_of(PyramidIntegration),
             ],
             send_default_pii=True,
-            before_send=AnyFunction(),
+            before_send=Any.function(),
         )
 
     def test_it_initializes_sentry_sdk_from_config(self, pyramid_config, sentry_sdk):
@@ -50,10 +50,10 @@ class TestIncludeMe:
         includeme(pyramid_config)
 
         sentry_sdk.init.assert_called_once_with(
-            integrations=Anything(),
+            integrations=Any(),
             environment="test",
-            send_default_pii=Anything(),
-            before_send=AnyFunction(),
+            send_default_pii=Any(),
+            before_send=Any.function(),
         )
 
     def test_it_reads_filter_configuration(self, pyramid_config, get_before_send):

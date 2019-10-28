@@ -2,10 +2,10 @@ import logging
 from unittest.mock import sentinel
 
 import pytest
+from h_matchers import Any
 
 from h_pyramid_sentry.event_filter import LOG_MESSAGE_PREFIX, get_before_send
 from h_pyramid_sentry.exceptions import FilterNotCallableError
-from h_pyramid_sentry.test import matcher
 
 
 class TestEventFilter:
@@ -50,9 +50,5 @@ class TestEventFilter:
         get_before_send([self.always_filter])(sentinel.event_dict, sentinel.hint_dict)
 
         assert caplog.record_tuples == [
-            (
-                matcher.AnyString(),
-                logging.INFO,
-                matcher.AnyStringContaining(LOG_MESSAGE_PREFIX),
-            )
+            (Any.string(), logging.INFO, Any.string.containing(LOG_MESSAGE_PREFIX))
         ]
