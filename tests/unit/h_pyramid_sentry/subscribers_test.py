@@ -1,11 +1,11 @@
 from unittest import mock
 
 import pytest
+from h_matchers import Any
 from pyramid import testing
 from pyramid_retry import BeforeRetry
 
 from h_pyramid_sentry.subscribers import add_retryable_error_to_sentry_context
-from h_pyramid_sentry.test.matcher import AnyStringMatching
 
 
 class TestAddRetryableErrorToSentryContext:
@@ -18,7 +18,7 @@ class TestAddRetryableErrorToSentryContext:
             ),
             mock.call(
                 "End of traceback from attempt 1/3",
-                AnyStringMatching(
+                Any.string.matching(
                     r"^Traceback \(most recent call last\):\n"
                     r'  File "/.*/subscribers_test\.py", line \d\d, in exception\n'
                     r'    raise RuntimeError\("Something went wrong"\)\n'
