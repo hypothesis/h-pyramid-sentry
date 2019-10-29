@@ -5,7 +5,6 @@ import re
 
 import sentry_sdk
 from pyramid.settings import asbool
-from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.logging import ignore_logger
 from sentry_sdk.integrations.pyramid import PyramidIntegration
 
@@ -25,10 +24,7 @@ def report_exception(exc=None):
     sentry_sdk.capture_exception(exc)
 
 
-DEFAULT_OPTIONS = {
-    "send_default_pii": True,
-    "integrations": [CeleryIntegration(), PyramidIntegration()],
-}
+DEFAULT_OPTIONS = {"send_default_pii": True, "integrations": [PyramidIntegration()]}
 OPTION_PATTERN = re.compile(r"^h_pyramid_sentry\.init\.(.*)$")
 
 
@@ -53,6 +49,13 @@ def includeme(config):
         match = OPTION_PATTERN.match(key)
         if match:
             init_options[match.group(1)] = value
+
+    if asbool(config.registry.settings.get("h_pyramid_sentry.celery_support")):
+        # pylint:disable=import-outside-toplevel
+        # This is here to lazy load only when required
+        from sentry_sdk.integrations.celery import CeleryIntegration
+
+        init_options["integrations"].append(CeleryIntegration())
 
     # exc_logger (which comes from
     # https://docs.pylonsproject.org/projects/pyramid_exclog/) logs all
