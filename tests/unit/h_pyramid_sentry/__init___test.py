@@ -36,10 +36,7 @@ class TestIncludeMe:
         includeme(pyramid_config)
 
         sentry_sdk.init.assert_called_once_with(
-            integrations=[
-                Any.instance_of(CeleryIntegration),
-                Any.instance_of(PyramidIntegration),
-            ],
+            integrations=[Any.instance_of(PyramidIntegration)],
             send_default_pii=True,
             before_send=Any.function(),
         )
@@ -76,6 +73,19 @@ class TestIncludeMe:
 
         get_before_send.assert_called_once_with([is_retryable_error])
         pyramid_config.scan.assert_called_with("h_pyramid_sentry.subscribers")
+
+    def test_it_reads_and_enables_celery_support(self, pyramid_config, sentry_sdk):
+        pyramid_config.registry.settings["h_pyramid_sentry.celery_support"] = True
+
+        includeme(pyramid_config)
+
+        sentry_sdk.init.assert_called_once_with(
+            # This is order sensitive, which we don't honestly care about.
+            # As and when list matchers become available we can replace this.
+            integrations=[Any(), Any.instance_of(CeleryIntegration)],
+            send_default_pii=True,
+            before_send=Any.function(),
+        )
 
     @pytest.fixture
     def pyramid_config(self):
