@@ -1,4 +1,4 @@
-"""A pyramid subscriber to add extra info to retryable events"""
+"""A pyramid subscriber to add extra info to retryable events."""
 import traceback
 
 import sentry_sdk
@@ -8,8 +8,7 @@ from pyramid_retry import IBeforeRetry
 
 @subscriber(IBeforeRetry)
 def add_retryable_error_to_sentry_context(event):
-    """
-    Add information about a retryable error to the Sentry context.
+    """Add information about a retryable error to the Sentry context.
 
     If a request raises a retryable error then, if we're not already on this
     request's last retry attempt, pyramid_retry calls this IBeforeRetry

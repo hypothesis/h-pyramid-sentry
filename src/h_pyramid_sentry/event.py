@@ -1,5 +1,4 @@
-"""
-Decorator class for Sentry events.
+"""Decorator class for Sentry events.
 
 Centralizes Sentry event parsing in one reusable place. Sentry events don't
 have a very convenient interface in the form that sentry_sdk sends them to
@@ -20,18 +19,17 @@ class Event:
 
     @property
     def event(self):
-        """The raw event dict as passed to us by sentry_sdk."""
+        """Get the raw event dict as passed to us by sentry_sdk."""
         return self._event
 
     @property
     def hint(self):
-        """The raw hint dict as passed to us by sentry_sdk."""
+        """Get the raw hint dict as passed to us by sentry_sdk."""
         return self._hint
 
     @property
     def logger(self):
-        """
-        The name of the logger that logged the error message.
+        """Get the name of the logger that logged the error message.
 
         A string, or None of this isn't a logger event.
         """
@@ -39,8 +37,7 @@ class Event:
 
     @property
     def message(self):
-        """
-        The message that was logged.
+        """Get the message that was logged.
 
         A string, or None of this isn't a logger event.
         """
@@ -48,8 +45,7 @@ class Event:
 
     @property
     def exception(self):
-        """
-        The actual exception object that was raised.
+        """Get the actual exception object that was raised.
 
         None if this isn't an exception event.
         """
