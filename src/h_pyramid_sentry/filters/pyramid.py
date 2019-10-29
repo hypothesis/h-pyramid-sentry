@@ -1,4 +1,4 @@
-"""Filters specifically for Pyramid"""
+"""Filters specifically for Pyramid."""
 
 # Import is_error_retryable indirectly to make importing from us less
 # confusing as we have a very similarly named function
@@ -7,8 +7,7 @@ from pyramid.threadlocal import get_current_request
 
 
 def is_retryable_error(event):
-    """
-    Filter exceptions from requests that are going to be retried.
+    """Filter exceptions from requests that are going to be retried.
 
     If a request raises a retryable error, so pyramid_retry automatically
     retries that request, and a subsequent retry succeeds and we end up sending

@@ -2,10 +2,7 @@
 
 
 class FilterNotCallableError(ValueError):
-    """
-    An exception which indicates we were passed a non-callable object as a
-    filter.
-    """
+    """Indicates we were passed a non-callable object as a filter."""
 
     def __init__(self, _filter):
         self.filter = _filter

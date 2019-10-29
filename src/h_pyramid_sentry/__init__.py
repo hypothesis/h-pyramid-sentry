@@ -12,8 +12,7 @@ from h_pyramid_sentry.event_filter import get_before_send
 
 
 def report_exception(exc=None):
-    """
-    Report an exception to the error tracking service.
+    """Report an exception to the error tracking service.
 
     If the given ``exc`` is :obj:`None` then the most recently raised exception
     will be reported.

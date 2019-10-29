@@ -1,4 +1,4 @@
-"""An object which filters events"""
+"""An object which filters events."""
 import logging
 
 from h_pyramid_sentry.event import Event
@@ -10,9 +10,7 @@ LOG_MESSAGE_TEMPLATE = f"{LOG_MESSAGE_PREFIX}: %s"
 
 
 def get_before_send(filters=None):
-    """
-    Returns a function which will decide whether the given Sentry event
-    should be reported or not.
+    """Return a function which applies the given filters to events.
 
     Each time an event (for example an uncaught exception or a logged
     error) that would be reported to Sentry happens, ``sentry_sdk`` calls
