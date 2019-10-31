@@ -6,6 +6,7 @@ help:
 	@echo "make checkformatting   Crash if the code isn't correctly formatted"
 
 	@echo "make dist              Create package in the dist/ directory"
+	@echo "make release           Tag a release and trigger deployment to PyPI"
 	@echo "make publish           Publish packages created in the dist/ directory"
 	@echo "make test              Run the unit tests"
 	@echo "make coverage          Print the unit test coverage report"
@@ -16,23 +17,27 @@ help:
 
 .PHONY: lint
 lint: python
-	@tox -qe py36-lint
+	@tox -qe lint
 
 .PHONY: format
 format: python
-	@tox -qe py36-format
+	@tox -qe format
 
 .PHONY: checkformatting
 checkformatting: python
-	@tox -qe py36-checkformatting
+	@tox -qe checkformatting
 
 .PHONY: dist
 dist: python
-	@BUILD=$(BUILD) tox -qe py36-package
+	@BUILD=$(BUILD) tox -qe package
+
+.PHONY: release
+release: python
+	@tox -qe release
 
 .PHONY: publish
 publish: python
-	@tox -qe py36-publish
+	@tox -qe publish
 
 .PHONY: test
 test: python
@@ -40,11 +45,11 @@ test: python
 
 .PHONY: coverage
 coverage: python
-	@tox -qe py36-coverage
+	@tox -qe coverage
 
 .PHONY: template
 template: python
-	@tox -qe py36-replay-cookiecutter
+	@tox -qe replay-cookiecutter
 
 .PHONY: clean
 clean:

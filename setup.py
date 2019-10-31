@@ -40,8 +40,11 @@ class Package:
         # If we have a build argument we should honour it no matter what
         build = os.environ.get(build_var)
         if build:
-            return self.version + "." + build
+            start = 'v' + self.version + '.'
+            if not build.startswith(start):
+                raise ValueError(f'Expected build to be "{start}*", got "{build}"')
 
+            return self.version + "." + build[len(start):]
         # If not, we should try and read it from the .egg-info/ data
 
         # We need to do this for source distributions, as setup.py is re-run when
