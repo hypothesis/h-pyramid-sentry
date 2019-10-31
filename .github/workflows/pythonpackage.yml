@@ -7,12 +7,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Debug github.ref
-      run: |
-        echo ${{ github.ref }}
-        echo ${{ github.event_name }}
-        echo ${{ github.event }}
-
     - name: Checkout code
       uses: actions/checkout@v1
 
@@ -89,7 +83,7 @@ jobs:
     - name: Package
       run: |
         pip install twine wheel
-        BUILD=`date +%Y%m%d.%H%M%S` python setup.py bdist_wheel sdist
+        BUILD=${{ github.ref }} python setup.py bdist_wheel sdist
         twine check dist/*
 
     - name: Archive packages
@@ -102,7 +96,7 @@ jobs:
     name: Publish
     needs: package
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: startsWith(github.ref, 'refs/tags/v')
 
     steps:
     - name: Download built packages

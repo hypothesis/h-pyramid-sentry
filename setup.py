@@ -37,14 +37,24 @@ class Package:
                     return line.strip().split("Version: ")[-1]
 
     def get_version(self, build_var="BUILD"):
-        # If we have a build argument we should honour it no matter what
+        # If we have a build argument we should honour it if we can
         build = os.environ.get(build_var)
         if build:
+            if build.startswith('refs/heads/'):
+                # We are being built via CI from a branch: we'll return a
+                # dummy value marking this as an 'alpha' release
+                return self.version + '.a0'
+
+            if build.startswith('refs/tags/'):
+                # We are being built via CI from a tag: strip the refs stuff
+                build = build.replace('refs/tags/', '')
+
             start = 'v' + self.version + '.'
             if not build.startswith(start):
                 raise ValueError(f'Expected build to be "{start}*", got "{build}"')
 
             return self.version + "." + build[len(start):]
+
         # If not, we should try and read it from the .egg-info/ data
 
         # We need to do this for source distributions, as setup.py is re-run when
