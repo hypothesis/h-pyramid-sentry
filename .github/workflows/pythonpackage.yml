@@ -7,6 +7,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Debug github.ref
+        run: |
+          echo ${{ github.ref }}
+          echo ${{ github.event_name }}
+          echo ${{ github.event }}
+
     - name: Checkout code
       uses: actions/checkout@v1
 
@@ -72,9 +78,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Debug github.ref
-      run: |
-        echo ${{ github.ref }}
     - name: Checkout code
       uses: actions/checkout@v1
 
