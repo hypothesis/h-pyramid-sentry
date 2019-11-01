@@ -4,10 +4,9 @@ help:
 	@echo "make lint              Code quality analysis (pylint)"
 	@echo "make format            Correctly format the code"
 	@echo "make checkformatting   Crash if the code isn't correctly formatted"
-
-	@echo "make dist              Create package in the dist/ directory"
+	@echo "make dist              Create package in the dist/ directory for local testing"
 	@echo "make release           Tag a release and trigger deployment to PyPI"
-	@echo "make publish           Publish packages created in the dist/ directory"
+	@echo "make initialrelease    Create the first release of a package"
 	@echo "make test              Run the unit tests"
 	@echo "make coverage          Print the unit test coverage report"
 	@echo "make clean             Delete development artefacts (cached files, "
@@ -29,15 +28,15 @@ checkformatting: python
 
 .PHONY: dist
 dist: python
-	@BUILD=$(BUILD) tox -qe package
+	@BUILD=$(BUILD) tox -qe dist
 
 .PHONY: release
 release: python
 	@tox -qe release
 
-.PHONY: publish
-publish: python
-	@tox -qe publish
+.PHONY: initialrelease
+initialrelease: python
+	@tox -qe initialrelease
 
 .PHONY: test
 test: python

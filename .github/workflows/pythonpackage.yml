@@ -10,6 +10,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v1
 
+    - name: Show git ref
+      run: |
+        echo ${{ github.ref }}
+
     - name: Set up Python 3.6
       uses: actions/setup-python@v1
       with:
