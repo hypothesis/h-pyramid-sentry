@@ -80,6 +80,7 @@ The extension will listen to the following Pyramid deployment settings:
 | `h_pyramid_sentry.filters` | A list of functions to apply as filters |
 | `h_pyramid_sentry.retry_support` *| Enable retry detection and filtering|
 | `h_pyramid_sentry.celery_support` *| Enable [Celery support for Sentry](https://docs.sentry.io/platforms/python/celery/) |
+| `h_pyramid_sentry.sqlalchemy_support` *| Enable [SQLAlchemy support for Sentry](https://docs.sentry.io/platforms/python/sqlalchemy/) |
 
 _* Enabling retry or celery support requires your application to list the relevant dependency (`pyramid_retry` or `celery`) as a dependency._ 
 

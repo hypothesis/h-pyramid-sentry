@@ -56,6 +56,12 @@ def includeme(config):
 
         init_options["integrations"].append(CeleryIntegration())
 
+    if asbool(config.registry.settings.get("h_pyramid_sentry.sqlalchemy_support")):
+        # pylint:disable=import-outside-toplevel
+        from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
+
+        init_options["integrations"].append(SqlalchemyIntegration())
+
     # exc_logger (which comes from
     # https://docs.pylonsproject.org/projects/pyramid_exclog/) logs all
     # exceptions with log level ERROR, and then all of these get picked up by
