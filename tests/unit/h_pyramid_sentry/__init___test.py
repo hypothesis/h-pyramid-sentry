@@ -5,6 +5,7 @@ from h_matchers import Any
 from pyramid.testing import testConfig
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.pyramid import PyramidIntegration
+from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 from h_pyramid_sentry import includeme, report_exception
 from h_pyramid_sentry.filters.pyramid import is_retryable_error
@@ -80,9 +81,18 @@ class TestIncludeMe:
         includeme(pyramid_config)
 
         sentry_sdk.init.assert_called_once_with(
-            # This is order sensitive, which we don't honestly care about.
-            # As and when list matchers become available we can replace this.
-            integrations=[Any(), Any.instance_of(CeleryIntegration)],
+            integrations=Any.list.containing([Any.instance_of(CeleryIntegration)]),
+            send_default_pii=True,
+            before_send=Any.function(),
+        )
+
+    def test_it_reads_and_enables_sqlalchemy_support(self, pyramid_config, sentry_sdk):
+        pyramid_config.registry.settings["h_pyramid_sentry.sqlalchemy_support"] = True
+
+        includeme(pyramid_config)
+
+        sentry_sdk.init.assert_called_once_with(
+            integrations=Any.list.containing([Any.instance_of(SqlalchemyIntegration)]),
             send_default_pii=True,
             before_send=Any.function(),
         )
