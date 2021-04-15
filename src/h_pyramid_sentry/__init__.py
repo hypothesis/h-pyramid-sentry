@@ -83,4 +83,5 @@ def includeme(config):
     # If pyramd_exclog isn't installed this will just have no effect.
     ignore_logger("exc_logger")
 
+    # pylint: disable=abstract-class-instantiated
     sentry_sdk.init(before_send=get_before_send(filters), **init_options)

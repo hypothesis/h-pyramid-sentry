@@ -14,7 +14,10 @@ class TestAddRetryableErrorToSentryContext:
 
         assert scope.set_extra.call_args_list == [
             mock.call(
-                "Exception from attempt 1/3", "RuntimeError('Something went wrong',)"
+                "Exception from attempt 1/3",
+                # Python 3.6 includes a comma at the end, but this is gone
+                # from 3.7 upwards
+                Any.string.matching(r"RuntimeError\('Something went wrong',?\)"),
             ),
             mock.call(
                 "End of traceback from attempt 1/3",
