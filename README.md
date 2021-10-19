@@ -1,9 +1,6 @@
 Hypothesis Pyramid Sentry Extension
 ===================================
 
-**At the moment the library is mostly being used as an experimental testing
-ground and therefore is not recommended for general use.**
-
 This is a Pyramid extension that wraps
 [sentry-sdk's Pyramid integration](https://docs.sentry.io/platforms/python/pyramid/)
 and adds some additional customization and features.
