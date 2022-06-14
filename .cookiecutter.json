@@ -11,5 +11,6 @@
             "src/h_pyramid_sentry/__init__.py"
         ]
     },
-    "_template": "gh:hypothesis/h-cookiecutter-pypackage"
+    "_template": "gh:hypothesis/h-cookiecutter-pypackage",
+    "_output_dir": "/tmp/tmpegoj49or"
 }
