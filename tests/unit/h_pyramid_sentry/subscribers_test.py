@@ -54,14 +54,13 @@ class TestAddRetryableErrorToSentryContext:
         return BeforeRetry(pyramid_request, exception)
 
     @pytest.fixture(autouse=True)
-    def exception(self, pyramid_request):
+    def exception(self):
         # Use a try/except in order to create an exception object with an
         # actual traceback.
         try:
             raise RuntimeError("Something went wrong")
         except RuntimeError as err:
-            exception = err
-        return exception
+            return err
 
     @pytest.fixture
     def pyramid_request(self):

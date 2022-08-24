@@ -1,0 +1,3 @@
+lint,tests: celery
+lint,tests: pyramid-retry
+lint,tests: sqlalchemy
