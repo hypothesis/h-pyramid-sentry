@@ -10,11 +10,11 @@ from h_pyramid_sentry.exceptions import FilterNotCallableError
 
 class TestEventFilter:
     @staticmethod
-    def always_filter(*args):
+    def always_filter(*_):
         return True
 
     @staticmethod
-    def never_filter(*args):
+    def never_filter(*_):
         return False
 
     def test_it_creates_Event(self, Event):
