@@ -2,7 +2,7 @@ from unittest import mock
 
 import pytest
 from h_matchers import Any
-from pyramid.testing import testConfig
+from pyramid import testing
 from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.pyramid import PyramidIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
@@ -99,7 +99,7 @@ class TestIncludeMe:
 
     @pytest.fixture
     def pyramid_config(self):
-        with testConfig() as config:
+        with testing.testConfig() as config:
             yield config
 
 
