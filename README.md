@@ -112,7 +112,7 @@ Then to set up your development environment:
 
 ```terminal
 git clone https://github.com/hypothesis/h-pyramid-sentry.git
-cd h_pyramid_sentry
+cd h-pyramid-sentry
 make help
 ```
 

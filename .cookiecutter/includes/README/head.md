@@ -1,4 +1,3 @@
-
 This is a Pyramid extension that wraps
 [sentry-sdk's Pyramid integration](https://docs.sentry.io/platforms/python/pyramid/)
 and adds some additional customization and features.
