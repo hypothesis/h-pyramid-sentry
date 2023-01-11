@@ -22,6 +22,7 @@
     "__entry_point": "h-pyramid-sentry",
     "__github_url": "https://github.com/hypothesis/h-pyramid-sentry",
     "__pypi_url": "https://pypi.org/project/h-pyramid-sentry",
-    "__copyright_year": "2022"
+    "__copyright_year": "2022",
+    "pypi": "yes"
   }
 }
