@@ -1,4 +1,5 @@
 """A pyramid subscriber to add extra info to retryable events."""
+
 import traceback
 
 import sentry_sdk
