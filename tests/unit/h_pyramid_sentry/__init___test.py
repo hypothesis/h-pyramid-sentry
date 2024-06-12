@@ -81,7 +81,7 @@ class TestIncludeMe:
         includeme(pyramid_config)
 
         sentry_sdk.init.assert_called_once_with(
-            integrations=Any.list.containing([Any.instance_of(CeleryIntegration)]),
+            integrations=Any.list().containing([Any.instance_of(CeleryIntegration)]),
             send_default_pii=True,
             before_send=Any.function(),
         )
@@ -92,7 +92,9 @@ class TestIncludeMe:
         includeme(pyramid_config)
 
         sentry_sdk.init.assert_called_once_with(
-            integrations=Any.list.containing([Any.instance_of(SqlalchemyIntegration)]),
+            integrations=Any.list().containing(
+                [Any.instance_of(SqlalchemyIntegration)]
+            ),
             send_default_pii=True,
             before_send=Any.function(),
         )
