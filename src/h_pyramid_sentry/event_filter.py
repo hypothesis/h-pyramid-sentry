@@ -1,4 +1,5 @@
 """An object which filters events."""
+
 import logging
 
 from h_pyramid_sentry.event import Event

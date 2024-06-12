@@ -1,6 +1,5 @@
 """Error tracking service API and setup."""
 
-
 import re
 
 import sentry_sdk
