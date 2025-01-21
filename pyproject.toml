@@ -2,6 +2,27 @@
 requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
+[project]
+dynamic = ["version"]
+name = "h-pyramid-sentry"
+description = "A library which integrates Sentry logging into Pyramid with the ability to filter out unwanted messages."
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD License",
+    "Intended Audience :: Developers",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "sentry-sdk",
+    "pyramid",
+]
+
+[project.urls]
+Repository = "https://github.com/hypothesis/h-pyramid-sentry"
+Issues = "https://github.com/hypothesis/h-pyramid-sentry/issues"
+Changelog = "https://github.com/hypothesis/h-pyramid-sentry/releases"
+
 [tool.setuptools_scm]
 
 [tool.pytest.ini_options]
