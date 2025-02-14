@@ -36,6 +36,7 @@ filterwarnings = [
     "ignore:^Deprecated call to .pkg_resources\\.declare_namespace\\('.*'\\).\\.:DeprecationWarning:pkg_resources",
     "ignore:^'cgi' is deprecated and slated for removal in Python 3\\.13$:DeprecationWarning:webob",
     "ignore:^datetime\\.datetime\\.utcnow\\(\\) is deprecated and scheduled for removal in a future version\\.:DeprecationWarning",
+    "ignore:The `propagate_traces` parameter is deprecated\\. Please use `trace_propagation_targets` instead\\.:DeprecationWarning:",
 ]
 
 [tool.pydocstyle]
